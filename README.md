@@ -5,14 +5,14 @@
 This plugin enables Calendar Versioning (calver) with Release It! This is especially useful for application projects in a continuous delivery environment. 
 
 ```
-npm install --save-dev @release-it/bumper
+npm install --save-dev @csmith/release-it-calver-plugin
 ```
 
 In [release-it](https://github.com/release-it/release-it) config:
 
 ```json
 "plugins": {
-  "@casmith/release-it-calver-plugin": {
+  "@csmith/release-it-calver-plugin": {
     "format": "YYYY.MM.MICRO"
   }
 }
