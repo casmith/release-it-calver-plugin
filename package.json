@@ -1,0 +1,35 @@
+{
+  "name": "release-it-calver-plugin",
+  "version": "1.0.0",
+  "description": "Calender Versioning (calver) plugin for Release It!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/casmith/release-it-calver-plugin.git"
+  },
+  "keywords": [
+    "release",
+    "release-it",
+    "release-it-plugin",
+    "version",
+    "bump",
+    "manifest",
+    "calver"
+  ],
+  "author": {
+    "name": "Clay Smith",
+    "email": "clay@claysmith.info"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/casmith/release-it-calver-plugin/issues"
+  },
+  "homepage": "https://github.com/casmith/release-it-calver-plugin#readme",
+  "dependencies": {
+    "calver": "^20.5.2",
+    "release-it": "^13.6.6"
+  }
+}
