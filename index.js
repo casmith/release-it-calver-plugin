@@ -11,7 +11,11 @@ class CalverPlugin extends Plugin {
     }
     
     getIncrementedVersion({latestVersion}) {
-        return new Calver(this.getFormat(), latestVersion).inc().get();
+        let calver = new Calver(this.getFormat(), latestVersion).inc();
+        if (calver.get() === latestVersion) {
+            calver = calver.inc('micro');
+        }
+        return calver.get();
     }
 
     getIncrementedVersionCI() {
