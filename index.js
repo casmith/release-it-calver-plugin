@@ -9,7 +9,7 @@ class CalverPlugin extends Plugin {
     getFormat() {
         return this.getContext().format || DEFAULT_FORMAT;
     }
-    
+
     getIncrementedVersion({latestVersion}) {
         let calver = new Calver(this.getFormat(), latestVersion).inc();
         if (calver.get() === latestVersion) {
@@ -19,6 +19,10 @@ class CalverPlugin extends Plugin {
     }
 
     getIncrementedVersionCI() {
+        return this.getIncrementedVersion(...arguments);
+    }
+
+    getIncrement() {
         return this.getIncrementedVersion(...arguments);
     }
 }
