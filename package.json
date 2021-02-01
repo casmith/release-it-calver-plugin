@@ -4,7 +4,7 @@
   "description": "Calender Versioning (calver) plugin for Release It!",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha **/*-tests.js"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,9 @@
   },
   "homepage": "https://github.com/casmith/release-it-calver-plugin#readme",
   "dependencies": {
-    "calver": "^20.5.2",
+    "calver": "^21.1.0",
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
     "release-it": "^13.6.6"
   }
 }
