@@ -1,3 +1,3 @@
 'use strict';
 
-return require('./calver-plugin');
+module.exports = require('./calver-plugin');
