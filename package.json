@@ -31,7 +31,12 @@
   "dependencies": {
     "calver": "^21.1.3",
     "chai": "^4.2.0",
-    "mocha": "^8.2.1",
-    "release-it": "^13.6.6"
+    "mocha": "^8.2.1"
+  },
+  "devDependencies": {
+    "release-it": "^14.6.2"
+  },
+  "peerDependencies": {
+    "release-it": "^14.6.2"
   }
 }
