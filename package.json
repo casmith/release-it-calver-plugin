@@ -1,10 +1,11 @@
 {
   "name": "@csmith/release-it-calver-plugin",
-  "version": "1.0.4",
+  "version": "2021.5.0",
   "description": "Calender Versioning (calver) plugin for Release It!",
   "main": "index.js",
   "scripts": {
-    "test": "mocha **/*-tests.js"
+    "test": "mocha **/*-tests.js",
+    "release": "release-it"
   },
   "repository": {
     "type": "git",
@@ -38,5 +39,15 @@
   },
   "peerDependencies": {
     "release-it": "^14.6.2"
+  },
+  "release-it": {
+    "github": {
+      "release": false
+    },
+    "plugins": {
+      "./index.js": {
+        "format": "YYYY.MM.MICRO"
+      }
+    }
   }
 }
