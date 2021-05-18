@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha **/*-tests.js",
-    "release": "release-it"
+    "release": "release-it -- --ci"
   },
   "repository": {
     "type": "git",
@@ -42,7 +42,10 @@
   },
   "release-it": {
     "github": {
-      "release": false
+      "release": true
+    },
+    "npm": {
+      "publish": true
     },
     "plugins": {
       "./index.js": {
