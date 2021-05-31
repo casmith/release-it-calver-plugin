@@ -12,7 +12,11 @@ class CalverPlugin extends Plugin {
 
     getIncrementedVersion({latestVersion}) {
         calver.init(this.getFormat());
-        return calver.inc(this.getFormat(), latestVersion, 'micro');
+        try {
+          return calver.inc(this.getFormat(), latestVersion, 'calendar');
+        } catch (e) {
+          return calver.inc(this.getFormat(), latestVersion, 'micro');
+        }
     }
 
     getIncrementedVersionCI() {
