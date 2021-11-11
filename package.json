@@ -1,6 +1,6 @@
 {
   "name": "@csmith/release-it-calver-plugin",
-  "version": "2021.11.3",
+  "version": "2021.11.4",
   "description": "Calender Versioning (calver) plugin for Release It!",
   "main": "index.js",
   "scripts": {
