@@ -105,3 +105,6 @@ dist
 
 # because this is a library
 package-lock.json
+
+# vim swap files
+*.swp
