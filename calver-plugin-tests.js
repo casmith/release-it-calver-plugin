@@ -31,7 +31,7 @@ describe('plugin', function () {
     before.setMonth(before.getMonth() - 2);
     const latestVersion = versionFromDate(before);
     const plugin = new CalverPlugin();
-    plugin.setContext({increment: 'micro'});
+    plugin.setContext({increment: 'minor'});
     const incrementedVersion = plugin.getIncrementedVersion({latestVersion});
     expect(incrementedVersion).to.equal(versionFromDate(before, 1));
   });
@@ -39,8 +39,17 @@ describe('plugin', function () {
     const now = new Date();
     const latestVersion = versionFromDate(now, 0, true);
     const plugin = new CalverPlugin();
-    plugin.setContext({format: "YYYY.MM.MICRO"});
+    plugin.setContext({format: 'yyyy.mm.minor'});
     const incrementedVersion = plugin.getIncrementedVersion({latestVersion});
     expect(incrementedVersion).to.equal(versionFromDate(now, 1, true));
+  });
+
+  xit('should support alpha increment', function () {
+    const now = new Date();
+    const version = '2021.1.1.0-alpha.0';
+    const plugin = new CalverPlugin();
+    plugin.setContext({'increment': 'alpha', 'format': 'yyyy.mm.minor.patch'});
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion: version});
+    expect(incrementedVersion).to.equal('2021.1.1.0-alpha.1');
   });    
 });

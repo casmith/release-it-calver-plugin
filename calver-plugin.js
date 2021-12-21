@@ -1,10 +1,10 @@
 'use strict';
 
 const Plugin = require('release-it/lib/plugin/Plugin'),
-    calver = require('calver'),
-    DEFAULT_FORMAT = 'YY.MM.MICRO',
+    calver = require('calver/node/lts'),
+    DEFAULT_FORMAT = 'yy.mm.minor',
     DEFAULT_INCREMENT = 'calendar',
-    FALLBACK_INCREMENT = 'micro';
+    FALLBACK_INCREMENT = 'minor';
 
 class CalverPlugin extends Plugin {
 
@@ -22,12 +22,10 @@ class CalverPlugin extends Plugin {
 
     getIncrementedVersion(args) {
         const {latestVersion} = args || {};
-        calver.init(this.getFormat());
-        try {
-          return calver.inc(this.getFormat(), latestVersion, this.getInc());
-        } catch (e) {
-          return calver.inc(this.getFormat(), latestVersion, this.getFallbackInc());
-        }
+        const incrementedVersion = calver.inc(this.getFormat(), latestVersion, this.getInc());
+        return incrementedVersion === latestVersion ? 
+          calver.inc(this.getFormat(), latestVersion, this.getFallbackInc()): 
+          incrementedVersion;
     }
 
     getIncrementedVersionCI() {
