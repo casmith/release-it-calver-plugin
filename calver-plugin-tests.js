@@ -44,7 +44,7 @@ describe('plugin', function () {
     expect(incrementedVersion).to.equal(versionFromDate(now, 1, true));
   });
 
-  xit('should support alpha increment', function () {
+  it('should support alpha increment', function () {
     const now = new Date();
     const version = '2021.1.1.0-alpha.0';
     const plugin = new CalverPlugin();
