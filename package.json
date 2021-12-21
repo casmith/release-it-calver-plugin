@@ -52,7 +52,7 @@
     },
     "plugins": {
       "./index.js": {
-        "format": "YYYY.MM.MICRO"
+        "format": "yyyy.mm.minor"
       }
     }
   }
