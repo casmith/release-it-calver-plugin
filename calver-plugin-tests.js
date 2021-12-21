@@ -20,6 +20,7 @@ describe('plugin', function () {
     const now = new Date();
     expect(incrementedVersion).to.equal(`${formatYear(now)}.${formatMonth(now)}.0`);
   });
+
   it('should bump minor when incrementing twice in the same month', function () {
     const now = new Date();
     const incrementedVersion = new CalverPlugin().getIncrementedVersion({latestVersion: versionFromDate(now)});
@@ -35,6 +36,7 @@ describe('plugin', function () {
     const incrementedVersion = plugin.getIncrementedVersion({latestVersion});
     expect(incrementedVersion).to.equal(versionFromDate(before, 1));
   });
+
   it('should accept a format option', function () {
     const now = new Date();
     const latestVersion = versionFromDate(now, 0, true);
@@ -45,11 +47,26 @@ describe('plugin', function () {
   });
 
   it('should support alpha increment', function () {
-    const now = new Date();
     const version = '2021.1.1.0-alpha.0';
     const plugin = new CalverPlugin();
     plugin.setContext({'increment': 'alpha', 'format': 'yyyy.mm.minor.patch'});
     const incrementedVersion = plugin.getIncrementedVersion({latestVersion: version});
     expect(incrementedVersion).to.equal('2021.1.1.0-alpha.1');
+  });
+
+  it('should work by calling getIncrement()', function () {
+    const version = '2021.1.1.0';
+    const plugin = new CalverPlugin();
+    plugin.setContext({'increment': 'minor', 'format': 'yyyy.mm.minor.patch'});
+    const incrementedVersion = plugin.getIncrement({latestVersion: version});
+    expect(incrementedVersion).to.equal('2021.1.2.0');
+  });    
+  
+  it('should work by calling getIncrementedVersionCI()', function () {
+    const version = '2021.1.1.0';
+    const plugin = new CalverPlugin();
+    plugin.setContext({'increment': 'minor', 'format': 'yyyy.mm.minor.patch'});
+    const incrementedVersion = plugin.getIncrementedVersionCI({latestVersion: version});
+    expect(incrementedVersion).to.equal('2021.1.2.0');
   });    
 });
