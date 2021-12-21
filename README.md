@@ -13,7 +13,8 @@ In [release-it](https://github.com/release-it/release-it) config:
 ```json
 "plugins": {
   "@csmith/release-it-calver-plugin": {
-    "format": "YYYY.MM.MICRO"
+    "format": "yyyy.mm.minor",
+    "increment": "calendar"
   }
 }
 ```

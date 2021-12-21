@@ -4,8 +4,8 @@ const CalverPlugin = require("./calver-plugin");
 const formatMonth = (date) => "" + (date.getMonth() + 1);
 const formatYear = (date, fullYear = false) => "" + (date.getFullYear() - (fullYear ? 0 : 2000));
 
-function versionFromDate(date, micro = 0, fullYear = false) {
-  return `${formatYear(date, fullYear)}.${formatMonth(date)}.${micro}`;
+function versionFromDate(date, minor = 0, fullYear = false) {
+  return `${formatYear(date, fullYear)}.${formatMonth(date)}.${minor}`;
 }
 
 
@@ -20,7 +20,7 @@ describe('plugin', function () {
     const now = new Date();
     expect(incrementedVersion).to.equal(`${formatYear(now)}.${formatMonth(now)}.0`);
   });
-  it('should bump micro when incrementing twice in the same month', function () {
+  it('should bump minor when incrementing twice in the same month', function () {
     const now = new Date();
     const incrementedVersion = new CalverPlugin().getIncrementedVersion({latestVersion: versionFromDate(now)});
     expect(incrementedVersion).to.equal(versionFromDate(now, 1));
