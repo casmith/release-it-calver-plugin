@@ -2,6 +2,8 @@
 
 ## Calender Versioning (calver) plugin for Release It!
 
+[![codecov](https://codecov.io/gh/casmith/release-it-calver-plugin/branch/master/graph/badge.svg?token=HKW5RKSQYW)](https://codecov.io/gh/casmith/release-it-calver-plugin)
+
 This plugin enables Calendar Versioning (calver) with Release It! This is especially useful for application projects in a continuous delivery environment. 
 
 ```
