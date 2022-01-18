@@ -29,6 +29,7 @@
     "url": "https://github.com/casmith/release-it-calver-plugin/issues"
   },
   "homepage": "https://github.com/casmith/release-it-calver-plugin#readme",
+  "type": "module",
   "dependencies": {
     "calver": "^21.11.3",
     "chai": "^4.2.0",

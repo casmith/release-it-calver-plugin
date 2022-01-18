@@ -1,8 +1,8 @@
 'use strict';
 
-const Plugin = require('release-it/lib/plugin/Plugin'),
-    calver = require('calver/node/lts'),
-    DEFAULT_FORMAT = 'yy.mm.minor',
+import Plugin from 'release-it/lib/plugin/Plugin.js';
+import calver from 'calver/node/lts';
+const DEFAULT_FORMAT = 'yy.mm.minor',
     DEFAULT_INCREMENT = 'calendar',
     FALLBACK_INCREMENT = 'minor';
 
@@ -37,4 +37,4 @@ class CalverPlugin extends Plugin {
     }
 }
 
-module.exports = CalverPlugin;
+export default CalverPlugin;

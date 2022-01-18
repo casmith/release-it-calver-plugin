@@ -1,5 +1,5 @@
-const expect    = require("chai").expect;
-const CalverPlugin = require("./calver-plugin");
+import {expect} from 'chai';
+import CalverPlugin from './calver-plugin.js';
 
 const formatMonth = (date) => "" + (date.getMonth() + 1);
 const formatYear = (date, fullYear = false) => "" + (date.getFullYear() - (fullYear ? 0 : 2000));
