@@ -1,3 +1,5 @@
 'use strict';
 
-module.exports = require('./calver-plugin');
+import CalverPlugin from './calver-plugin.js';
+
+export default CalverPlugin;
