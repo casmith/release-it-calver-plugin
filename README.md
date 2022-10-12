@@ -33,10 +33,10 @@ In [release-it](https://github.com/release-it/release-it) config:
 ```
 ##### Output in November and December 2024
 ```
-2024.11.0
-2024.11.1
-2024.12.1
-2024.12.2
+24.11.0
+24.11.1
+24.12.1
+24.12.2
 ```
 
 ##### Custom
