@@ -22,10 +22,15 @@ class CalverPlugin extends Plugin {
 
     getIncrementedVersion(args) {
         const {latestVersion} = args || {};
-        const incrementedVersion = calver.inc(this.getFormat(), latestVersion, this.getInc());
-        return incrementedVersion === latestVersion ? 
-          calver.inc(this.getFormat(), latestVersion, this.getFallbackInc()): 
-          incrementedVersion;
+        try {
+            return calver.inc(this.getFormat(), latestVersion, this.getInc());
+        } catch {
+            try {
+                return calver.inc(this.getFormat(), latestVersion, this.getFallbackInc());
+            } catch {
+                return latestVersion;
+            }
+        }
     }
 
     getIncrementedVersionCI() {

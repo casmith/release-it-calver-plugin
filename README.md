@@ -21,4 +21,37 @@ In [release-it](https://github.com/release-it/release-it) config:
 }
 ```
 
+#### Configuration examples:
+
+##### Defaults
+```json
+{
+    "format": "yy.mm.minor",
+    "increment": "calendar",
+    "fallbackIncrement": "minor"
+}
+```
+##### Output in November and December 2024
+```
+2024.11.0
+2024.11.1
+2024.12.1
+2024.12.2
+```
+
+##### Custom
+```json
+{
+    "format": "yyyy.mm.minor",
+    "increment": "calendar.minor"
+}
+```
+##### Output in November and December 2024
+```
+2024.11.0
+2024.11.1
+2024.12.0
+2024.12.1
+```
+
 More information on available format tags can be found here: [calver](https://github.com/muratgozel/node-calver)

@@ -54,6 +54,18 @@ describe('plugin', function () {
     expect(incrementedVersion).to.equal('2021.1.1.0-alpha.1');
   });
 
+  it('should support both calendar and semantic tags in increment', function () {
+    const now = new Date();
+    const latestVersion = '21.1.5';
+    const plugin = new CalverPlugin();
+    plugin.setContext({'increment': 'calendar.minor'});
+    const firstBump = plugin.getIncrementedVersion({latestVersion});
+    const secondBump = plugin.getIncrementedVersion({latestVersion: firstBump});
+    const incrementedVersions = [firstBump, secondBump];
+    const expectedVersions = [versionFromDate(now, 0), versionFromDate(now, 1)];
+    expect(incrementedVersions).deep.to.equal(expectedVersions);
+  });
+
   it('should work by calling getIncrement()', function () {
     const version = '2021.1.1.0';
     const plugin = new CalverPlugin();
