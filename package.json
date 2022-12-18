@@ -37,10 +37,10 @@
   },
   "devDependencies": {
     "nyc": "^15.1.0",
-    "release-it": "^15.0.0"
+    "release-it": "^15.5.1"
   },
   "peerDependencies": {
-    "release-it": "^14.6.2"
+    "release-it": "^15.5.1"
   },
   "release-it": {
     "git": {
