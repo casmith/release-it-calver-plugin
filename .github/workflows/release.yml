@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.0.0
+      - uses: actions/checkout@v4.1.0
         with:
           fetch-depth: 0
       - name: git config
@@ -29,7 +29,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.0.0
+      - uses: actions/checkout@v4.1.0
         with:
           fetch-depth: 0
       - name: git config
