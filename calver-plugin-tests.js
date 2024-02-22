@@ -80,5 +80,14 @@ describe('plugin', function () {
     plugin.setContext({'increment': 'minor', 'format': 'yyyy.mm.minor.patch'});
     const incrementedVersion = plugin.getIncrementedVersionCI({latestVersion: version});
     expect(incrementedVersion).to.equal('2021.1.2.0');
-  });    
+  });
+
+  it('should increment version without existing tags', function () {
+    const plugin = new CalverPlugin();
+    plugin.setContext({ increment: 'minor', format: 'yyyy.mm.minor.patch' });
+    const incrementedVersion = plugin.getIncrementedVersion({
+      latestVersion: '',
+    });
+    expect(incrementedVersion).to.equal(versionFromDate(new Date(), 1));
+  });
 });
