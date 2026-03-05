@@ -33,7 +33,7 @@
   "dependencies": {
     "calver": "^22.9.1",
     "chai": "^5.0.0",
-    "mocha": "^10.2.0"
+    "mocha": "^11.7.5"
   },
   "devDependencies": {
     "nyc": "^15.1.0",
