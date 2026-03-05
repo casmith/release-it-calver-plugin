@@ -31,7 +31,7 @@
   "homepage": "https://github.com/casmith/release-it-calver-plugin#readme",
   "type": "module",
   "dependencies": {
-    "calver": "^24.1.0",
+    "calver": "^22.9.1",
     "chai": "^5.0.0",
     "mocha": "^10.2.0"
   },
