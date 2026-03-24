@@ -50,7 +50,9 @@
       "release": true
     },
     "npm": {
-      "publish": true
+      "publish": true,
+      "skipChecks": true,
+      "publishArgs": ["--provenance", "--access", "public"]
     },
     "plugins": {
       "./index.js": {
