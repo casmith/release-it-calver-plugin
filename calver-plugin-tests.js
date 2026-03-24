@@ -76,6 +76,36 @@ describe('plugin', function () {
     expect(incrementedVersion).to.equal(`${formatYear(now)}.1`);
   });
 
+  it('should bump day cycle when date changes', function () {
+    const now = new Date();
+    const formatDay = (date) => "" + date.getDate();
+    const plugin = new CalverPlugin();
+    plugin.setContext({cycle: 'day'});
+    const latestVersion = '2025-9-15.0';
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion});
+    expect(incrementedVersion).to.equal(`${formatYear(now)}-${formatMonth(now)}-${formatDay(now)}.0`);
+  });
+
+  it('should bump day cycle minor on same day', function () {
+    const now = new Date();
+    const formatDay = (date) => "" + date.getDate();
+    const plugin = new CalverPlugin();
+    plugin.setContext({cycle: 'day'});
+    const latestVersion = `${formatYear(now)}-${formatMonth(now)}-${formatDay(now)}.0`;
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion});
+    expect(incrementedVersion).to.equal(`${formatYear(now)}-${formatMonth(now)}-${formatDay(now)}.1`);
+  });
+
+  it('should map deprecated yyyy.0m.0d.minor format to day cycle', function () {
+    const now = new Date();
+    const formatDay = (date) => "" + date.getDate();
+    const plugin = new CalverPlugin();
+    plugin.setContext({format: 'yyyy.0m.0d.minor'});
+    const latestVersion = '2025-9-15.0';
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion});
+    expect(incrementedVersion).to.equal(`${formatYear(now)}-${formatMonth(now)}-${formatDay(now)}.0`);
+  });
+
   it('should work by calling getIncrement()', function () {
     const now = new Date();
     const version = versionFromDate(now);

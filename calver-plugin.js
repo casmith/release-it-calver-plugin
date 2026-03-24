@@ -21,6 +21,10 @@ const FORMAT_TO_CYCLE = {
     'yyyy.mm.dd': 'day',
     'yy.mm.dd.minor': 'day',
     'yyyy.mm.dd.minor': 'day',
+    'yy.0m.0d.minor': 'day',
+    'yyyy.0m.0d.minor': 'day',
+    'yy.0m.minor': 'month',
+    'yyyy.0m.minor': 'month',
 };
 
 class CalverPlugin extends Plugin {
