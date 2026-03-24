@@ -134,6 +134,43 @@ describe('plugin', function () {
     expect(incrementedVersion).to.equal(`api-${versionFromDate(now, 0)}`);
   });
 
+  it('should migrate old dot-separated month format', function () {
+    const now = new Date();
+    const plugin = new CalverPlugin();
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion: '2026.3.4'});
+    expect(incrementedVersion).to.equal(versionFromDate(now, 5));
+  });
+
+  it('should migrate old dot-separated day format', function () {
+    const now = new Date();
+    const formatDay = (date) => "" + date.getDate();
+    const plugin = new CalverPlugin();
+    plugin.setContext({cycle: 'day'});
+    const latestVersion = `${formatYear(now)}.${formatMonth(now)}.${formatDay(now)}.0`;
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion});
+    expect(incrementedVersion).to.equal(`${formatYear(now)}-${formatMonth(now)}-${formatDay(now)}.1`);
+  });
+
+  it('should migrate old 2-digit year format', function () {
+    const now = new Date();
+    const incrementedVersion = new CalverPlugin().getIncrementedVersion({latestVersion: '26.3.4'});
+    expect(incrementedVersion).to.equal(versionFromDate(now, 5));
+  });
+
+  it('should migrate old format with prefix', function () {
+    const now = new Date();
+    const plugin = new CalverPlugin();
+    plugin.setContext({prefix: 'ui-'});
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion: 'ui-2026.3.4'});
+    expect(incrementedVersion).to.equal(`ui-${versionFromDate(now, 5)}`);
+  });
+
+  it('should not migrate already-new format', function () {
+    const now = new Date();
+    const incrementedVersion = new CalverPlugin().getIncrementedVersion({latestVersion: '2026-3.4'});
+    expect(incrementedVersion).to.equal(versionFromDate(now, 5));
+  });
+
   it('should work by calling getIncrement()', function () {
     const now = new Date();
     const version = versionFromDate(now);

@@ -27,6 +27,20 @@ const FORMAT_TO_CYCLE = {
     'yyyy.0m.minor': 'month',
 };
 
+function migrateVersion(version) {
+    // Already in new format
+    if (version.includes('-')) return version;
+    // Expand 2-digit year to 4-digit
+    let v = version.replace(/^(\d{2})\./, (_, yy) => '20' + yy + '.');
+    // Day format: YYYY.MM.DD.minor → YYYY-MM-DD.minor
+    v = v.replace(/^(\d{4})\.(\d{1,2})\.(\d{1,2})\.(\d+)$/, '$1-$2-$3.$4');
+    // Month format: YYYY.MM.minor → YYYY-MM.minor
+    if (!v.includes('-')) {
+        v = v.replace(/^(\d{4})\.(\d{1,2})\.(\d+)$/, '$1-$2.$3');
+    }
+    return v;
+}
+
 class CalverPlugin extends Plugin {
 
     getPrefix() {
@@ -56,7 +70,7 @@ class CalverPlugin extends Plugin {
             return prefix + initial({cycle: this.getCycle()}) + '.0';
         }
         try {
-            const result = cycle(version, {cycle: this.getCycle()});
+            const result = cycle(migrateVersion(version), {cycle: this.getCycle()});
             return prefix + (result.includes('.') ? result : result + '.0');
         } catch {
             return latestVersion;
