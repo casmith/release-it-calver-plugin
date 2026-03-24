@@ -41,6 +41,10 @@ function migrateVersion(version) {
     return v;
 }
 
+function toSemverCompatible(version) {
+    return version.replace(/-/g, '.');
+}
+
 class CalverPlugin extends Plugin {
 
     getPrefix() {
@@ -67,11 +71,12 @@ class CalverPlugin extends Plugin {
             ? latestVersion.slice(prefix.length)
             : latestVersion;
         if (!version || version === '0.0.0') {
-            return prefix + initial({cycle: this.getCycle()}) + '.0';
+            return prefix + toSemverCompatible(initial({cycle: this.getCycle()})) + '.0';
         }
         try {
             const result = cycle(migrateVersion(version), {cycle: this.getCycle()});
-            return prefix + (result.includes('.') ? result : result + '.0');
+            const normalized = result.includes('.') ? result : result + '.0';
+            return prefix + toSemverCompatible(normalized);
         } catch {
             return latestVersion;
         }
