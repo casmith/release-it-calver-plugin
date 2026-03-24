@@ -39,6 +39,7 @@ jobs:
         with:
           node-version: 20
           registry-url: 'https://registry.npmjs.org'
+      - run: npm install -g npm@latest
       - name: git config
         run: |
           git config user.name "${GITHUB_ACTOR}"
