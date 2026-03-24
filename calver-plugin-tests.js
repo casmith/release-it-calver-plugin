@@ -58,6 +58,24 @@ describe('plugin', function () {
     expect(incrementedVersion).to.equal(versionFromDate(now, 0));
   });
 
+  it('should map deprecated format option to month cycle', function () {
+    const now = new Date();
+    const version = versionFromDate(now);
+    const plugin = new CalverPlugin();
+    plugin.setContext({format: 'yyyy.mm.minor'});
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion: version});
+    expect(incrementedVersion).to.equal(versionFromDate(now, 1));
+  });
+
+  it('should map deprecated format option to year cycle', function () {
+    const now = new Date();
+    const latestVersion = `${formatYear(now)}.0`;
+    const plugin = new CalverPlugin();
+    plugin.setContext({format: 'yyyy.minor'});
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion});
+    expect(incrementedVersion).to.equal(`${formatYear(now)}.1`);
+  });
+
   it('should work by calling getIncrement()', function () {
     const now = new Date();
     const version = versionFromDate(now);

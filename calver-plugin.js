@@ -4,10 +4,38 @@ import { Plugin } from 'release-it';
 import { cycle, initial } from 'calver';
 const DEFAULT_CYCLE = 'month';
 
+const FORMAT_TO_CYCLE = {
+    'yy.mm': 'month',
+    'yyyy.mm': 'month',
+    'yy.mm.minor': 'month',
+    'yyyy.mm.minor': 'month',
+    'yy.mm.minor.patch': 'month',
+    'yyyy.mm.minor.patch': 'month',
+    'yy.minor': 'year',
+    'yyyy.minor': 'year',
+    'yy.ww': 'week',
+    'yyyy.ww': 'week',
+    'yy.ww.minor': 'week',
+    'yyyy.ww.minor': 'week',
+    'yy.mm.dd': 'day',
+    'yyyy.mm.dd': 'day',
+    'yy.mm.dd.minor': 'day',
+    'yyyy.mm.dd.minor': 'day',
+};
+
 class CalverPlugin extends Plugin {
 
     getCycle() {
-        return this.getContext().cycle || DEFAULT_CYCLE;
+        const { cycle, format } = this.getContext();
+        if (cycle) return cycle;
+        if (format) {
+            const mapped = FORMAT_TO_CYCLE[format.toLowerCase()];
+            if (mapped) {
+                this.log?.warn(`Deprecated: "format" option "${format}" is deprecated. Use "cycle": "${mapped}" instead.`);
+                return mapped;
+            }
+        }
+        return DEFAULT_CYCLE;
     }
 
     getIncrementedVersion(args) {
