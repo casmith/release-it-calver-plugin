@@ -106,21 +106,49 @@ Dash-separated versions are not valid semver, so you will also need to configure
 }
 ```
 
-## Migrating from older versions
+## Upgrading from pre-calver 24.x versions
 
-### From format/increment to cycle
+This plugin now uses [calver 24.x](https://github.com/muratgozel/node-calver), which is a complete rewrite of the calver library. The plugin handles the transition automatically, but there are some things to be aware of.
 
-The `format`, `increment`, and `fallbackIncrement` options are deprecated but still supported. The plugin will automatically map them to the appropriate `cycle` setting.
+### What happens automatically
 
-| Old format | New cycle |
+- **Old config still works.** The `format`, `increment`, and `fallbackIncrement` options are deprecated but still supported. The plugin maps them to the new `cycle` setting and logs a deprecation warning. You can upgrade your config at your own pace.
+- **Old tags are migrated.** Existing tags in the old format (e.g. `24.11.0` or `2024.11.0`) are automatically converted when computing the next version. No manual retagging is needed.
+- **Initial versions work.** If your repository has no prior calver tags (or only a `0.0.0` tag), the plugin now correctly generates an initial version instead of returning `0.0.0`.
+
+### What changes
+
+- **4-digit years.** Versions now always use 4-digit years. If your previous tags used 2-digit years (e.g. `24.11.0`), the next version will use 4-digit years (e.g. `2026.3.0`).
+- **Simplified config.** The `format` and `increment` options are replaced by a single `cycle` option. See the table below for the mapping.
+
+### Config mapping
+
+| Old config | New config |
 |---|---|
-| `yy.mm.minor`, `yyyy.mm.minor` | `month` |
-| `yy.minor`, `yyyy.minor` | `year` |
-| `yy.ww.minor`, `yyyy.ww.minor` | `week` |
-| `yy.mm.dd.minor`, `yyyy.mm.dd.minor` | `day` |
+| `"format": "yy.mm.minor", "increment": "calendar"` | `"cycle": "month"` |
+| `"format": "yyyy.mm.minor", "increment": "calendar"` | `"cycle": "month"` |
+| `"format": "yyyy.minor", "increment": "calendar"` | `"cycle": "year"` |
+| `"format": "yyyy.ww.minor", "increment": "calendar"` | `"cycle": "week"` |
+| `"format": "yyyy.mm.dd.minor", "increment": "calendar"` | `"cycle": "day"` |
+| `"format": "yyyy.0m.minor"` | `"cycle": "month"` |
+| `"format": "yyyy.0m.0d.minor"` | `"cycle": "day"` |
 
-### Version format changes
+### Example upgrade
 
-Older versions of this plugin used 2-digit years (e.g. `24.11.0`). The current version always uses 4-digit years (e.g. `2024.11.0`). Existing tags in the old format are automatically migrated when computing the next version.
+Before:
+```json
+"@csmith/release-it-calver-plugin": {
+    "format": "yyyy.mm.minor",
+    "increment": "calendar",
+    "fallbackIncrement": "minor"
+}
+```
+
+After:
+```json
+"@csmith/release-it-calver-plugin": {
+    "cycle": "month"
+}
+```
 
 More information on calendar versioning can be found here: [calver](https://github.com/muratgozel/node-calver)
