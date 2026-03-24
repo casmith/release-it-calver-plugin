@@ -171,6 +171,22 @@ describe('plugin', function () {
     expect(incrementedVersion).to.equal(versionFromDate(now, 5));
   });
 
+  it('should output dash-separated format when separator is -', function () {
+    const now = new Date();
+    const plugin = new CalverPlugin();
+    plugin.setContext({separator: '-'});
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion: `2026-3.4`});
+    expect(incrementedVersion).to.equal(`${formatYear(now)}-${formatMonth(now)}.5`);
+  });
+
+  it('should output dash-separated initial version when separator is -', function () {
+    const now = new Date();
+    const plugin = new CalverPlugin();
+    plugin.setContext({separator: '-'});
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion: '0.0.0'});
+    expect(incrementedVersion).to.equal(`${formatYear(now)}-${formatMonth(now)}.0`);
+  });
+
   it('should work by calling getIncrement()', function () {
     const now = new Date();
     const version = versionFromDate(now);
