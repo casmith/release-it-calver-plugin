@@ -74,6 +74,13 @@ describe('plugin', function () {
     expect(incrementedVersion).to.equal('2021.1.2.0');
   });    
   
+  it('should generate initial version when latestVersion is 0.0.0', function () {
+    const now = new Date();
+    const plugin = new CalverPlugin();
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion: '0.0.0'});
+    expect(incrementedVersion).to.equal(`${formatYear(now)}.${formatMonth(now)}.0`);
+  });
+
   it('should work by calling getIncrementedVersionCI()', function () {
     const version = '2021.1.1.0';
     const plugin = new CalverPlugin();
