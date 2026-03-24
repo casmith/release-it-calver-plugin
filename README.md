@@ -98,6 +98,14 @@ By default, all date segments are separated by `.` for npm semver compatibility.
 
 Produces versions like `2026-3.0`, `2026-3.1`, etc.
 
+Dash-separated versions are not valid semver, so you will also need to configure release-it to skip npm version checks:
+
+```json
+"npm": {
+    "skipChecks": true
+}
+```
+
 ## Migrating from older versions
 
 ### From format/increment to cycle
