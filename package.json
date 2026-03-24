@@ -32,7 +32,7 @@
   "type": "module",
   "dependencies": {
     "calver": "^22.9.1",
-    "chai": "^5.0.0",
+    "chai": "^6.2.2",
     "mocha": "^11.7.5"
   },
   "devDependencies": {
