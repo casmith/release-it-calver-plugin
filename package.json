@@ -60,7 +60,7 @@
     },
     "plugins": {
       "./index.js": {
-        "format": "yyyy.mm.minor"
+        "cycle": "month"
       }
     }
   }

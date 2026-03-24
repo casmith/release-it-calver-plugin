@@ -1,36 +1,25 @@
 'use strict';
 
 import { Plugin } from 'release-it';
-import calver from 'calver/node/lts';
-const DEFAULT_FORMAT = 'yy.mm.minor',
-    DEFAULT_INCREMENT = 'calendar',
-    FALLBACK_INCREMENT = 'minor';
+import { cycle, initial } from 'calver';
+const DEFAULT_CYCLE = 'month';
 
 class CalverPlugin extends Plugin {
 
-    getFormat() {
-        return this.getContext().format || DEFAULT_FORMAT;
-    }
-
-    getInc() {
-        return this.getContext().increment || DEFAULT_INCREMENT;
-    }
-
-    getFallbackInc() {
-        return this.getContext().fallbackIncrement || FALLBACK_INCREMENT;
+    getCycle() {
+        return this.getContext().cycle || DEFAULT_CYCLE;
     }
 
     getIncrementedVersion(args) {
         const {latestVersion} = args || {};
-        const version = latestVersion === '0.0.0' ? '' : latestVersion;
+        if (!latestVersion || latestVersion === '0.0.0') {
+            return initial({cycle: this.getCycle()}) + '.0';
+        }
         try {
-            return calver.inc(this.getFormat(), version, this.getInc());
+            const result = cycle(latestVersion, {cycle: this.getCycle()});
+            return result.includes('.') ? result : result + '.0';
         } catch {
-            try {
-                return calver.inc(this.getFormat(), version, this.getFallbackInc());
-            } catch {
-                return latestVersion;
-            }
+            return latestVersion;
         }
     }
 
