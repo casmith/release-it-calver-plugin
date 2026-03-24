@@ -29,6 +29,10 @@ const FORMAT_TO_CYCLE = {
 
 class CalverPlugin extends Plugin {
 
+    getPrefix() {
+        return this.getContext().prefix || '';
+    }
+
     getCycle() {
         const { cycle, format } = this.getContext();
         if (cycle) return cycle;
@@ -44,12 +48,16 @@ class CalverPlugin extends Plugin {
 
     getIncrementedVersion(args) {
         const {latestVersion} = args || {};
-        if (!latestVersion || latestVersion === '0.0.0') {
-            return initial({cycle: this.getCycle()}) + '.0';
+        const prefix = this.getPrefix();
+        const version = prefix && latestVersion?.startsWith(prefix)
+            ? latestVersion.slice(prefix.length)
+            : latestVersion;
+        if (!version || version === '0.0.0') {
+            return prefix + initial({cycle: this.getCycle()}) + '.0';
         }
         try {
-            const result = cycle(latestVersion, {cycle: this.getCycle()});
-            return result.includes('.') ? result : result + '.0';
+            const result = cycle(version, {cycle: this.getCycle()});
+            return prefix + (result.includes('.') ? result : result + '.0');
         } catch {
             return latestVersion;
         }

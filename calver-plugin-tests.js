@@ -106,6 +106,34 @@ describe('plugin', function () {
     expect(incrementedVersion).to.equal(`${formatYear(now)}-${formatMonth(now)}-${formatDay(now)}.0`);
   });
 
+  it('should support prefix option', function () {
+    const now = new Date();
+    const plugin = new CalverPlugin();
+    plugin.setContext({prefix: 'ui-'});
+    const latestVersion = `ui-${versionFromDate(now)}`;
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion});
+    expect(incrementedVersion).to.equal(`ui-${versionFromDate(now, 1)}`);
+  });
+
+  it('should add prefix to initial version', function () {
+    const now = new Date();
+    const plugin = new CalverPlugin();
+    plugin.setContext({prefix: 'ui-'});
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion: '0.0.0'});
+    expect(incrementedVersion).to.equal(`ui-${versionFromDate(now, 0)}`);
+  });
+
+  it('should add prefix when bumping calendar', function () {
+    const now = new Date();
+    const before = new Date();
+    before.setMonth(before.getMonth() - 2);
+    const plugin = new CalverPlugin();
+    plugin.setContext({prefix: 'api-'});
+    const latestVersion = `api-${versionFromDate(before)}`;
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion});
+    expect(incrementedVersion).to.equal(`api-${versionFromDate(now, 0)}`);
+  });
+
   it('should work by calling getIncrement()', function () {
     const now = new Date();
     const version = versionFromDate(now);
