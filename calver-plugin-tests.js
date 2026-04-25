@@ -1,8 +1,8 @@
 import {expect} from 'chai';
 import CalverPlugin from './calver-plugin.js';
 
-const formatMonth = (date) => "" + (date.getMonth() + 1);
-const formatYear = (date) => "" + date.getFullYear();
+const formatMonth = (date) => "" + (date.getUTCMonth() + 1);
+const formatYear = (date) => "" + date.getUTCFullYear();
 
 function versionFromDate(date, minor = 0) {
   return `${formatYear(date)}.${formatMonth(date)}.${minor}`;
@@ -78,7 +78,7 @@ describe('plugin', function () {
 
   it('should bump day cycle when date changes', function () {
     const now = new Date();
-    const formatDay = (date) => "" + date.getDate();
+    const formatDay = (date) => "" + date.getUTCDate();
     const plugin = new CalverPlugin();
     plugin.setContext({cycle: 'day'});
     const latestVersion = '2025.9.15.0';
@@ -88,7 +88,7 @@ describe('plugin', function () {
 
   it('should bump day cycle minor on same day', function () {
     const now = new Date();
-    const formatDay = (date) => "" + date.getDate();
+    const formatDay = (date) => "" + date.getUTCDate();
     const plugin = new CalverPlugin();
     plugin.setContext({cycle: 'day'});
     const latestVersion = `${formatYear(now)}.${formatMonth(now)}.${formatDay(now)}.0`;
@@ -98,7 +98,7 @@ describe('plugin', function () {
 
   it('should map deprecated yyyy.0m.0d.minor format to day cycle', function () {
     const now = new Date();
-    const formatDay = (date) => "" + date.getDate();
+    const formatDay = (date) => "" + date.getUTCDate();
     const plugin = new CalverPlugin();
     plugin.setContext({format: 'yyyy.0m.0d.minor'});
     const latestVersion = '2025.9.15.0';
@@ -137,13 +137,13 @@ describe('plugin', function () {
   it('should migrate old dot-separated month format', function () {
     const now = new Date();
     const plugin = new CalverPlugin();
-    const incrementedVersion = plugin.getIncrementedVersion({latestVersion: '2026.3.4'});
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion: versionFromDate(now, 4)});
     expect(incrementedVersion).to.equal(versionFromDate(now, 5));
   });
 
   it('should migrate old dot-separated day format', function () {
     const now = new Date();
-    const formatDay = (date) => "" + date.getDate();
+    const formatDay = (date) => "" + date.getUTCDate();
     const plugin = new CalverPlugin();
     plugin.setContext({cycle: 'day'});
     const latestVersion = `${formatYear(now)}.${formatMonth(now)}.${formatDay(now)}.0`;
@@ -153,7 +153,8 @@ describe('plugin', function () {
 
   it('should migrate old 2-digit year format', function () {
     const now = new Date();
-    const incrementedVersion = new CalverPlugin().getIncrementedVersion({latestVersion: '26.3.4'});
+    const latestVersion = `${formatYear(now).slice(2)}.${formatMonth(now)}.4`;
+    const incrementedVersion = new CalverPlugin().getIncrementedVersion({latestVersion});
     expect(incrementedVersion).to.equal(versionFromDate(now, 5));
   });
 
@@ -161,13 +162,14 @@ describe('plugin', function () {
     const now = new Date();
     const plugin = new CalverPlugin();
     plugin.setContext({prefix: 'ui-'});
-    const incrementedVersion = plugin.getIncrementedVersion({latestVersion: 'ui-2026.3.4'});
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion: `ui-${versionFromDate(now, 4)}`});
     expect(incrementedVersion).to.equal(`ui-${versionFromDate(now, 5)}`);
   });
 
   it('should handle dash-separated input format', function () {
     const now = new Date();
-    const incrementedVersion = new CalverPlugin().getIncrementedVersion({latestVersion: '2026-3.4'});
+    const latestVersion = `${formatYear(now)}-${formatMonth(now)}.4`;
+    const incrementedVersion = new CalverPlugin().getIncrementedVersion({latestVersion});
     expect(incrementedVersion).to.equal(versionFromDate(now, 5));
   });
 
@@ -175,7 +177,7 @@ describe('plugin', function () {
     const now = new Date();
     const plugin = new CalverPlugin();
     plugin.setContext({separator: '-'});
-    const incrementedVersion = plugin.getIncrementedVersion({latestVersion: `2026-3.4`});
+    const incrementedVersion = plugin.getIncrementedVersion({latestVersion: `${formatYear(now)}-${formatMonth(now)}.4`});
     expect(incrementedVersion).to.equal(`${formatYear(now)}-${formatMonth(now)}.5`);
   });
 
